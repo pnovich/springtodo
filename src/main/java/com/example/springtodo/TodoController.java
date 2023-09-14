@@ -2,10 +2,7 @@ package com.example.springtodo;
 
 import jakarta.annotation.PostConstruct;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.Arrays;
 import java.util.List;
@@ -18,6 +15,26 @@ public class TodoController {
     @GetMapping("/todos")
     public List<Todo> getAllTodos() {
         return todoRepository.findAll();
+    }
+
+    @GetMapping("/todos/find/{id}")
+    public Todo getTodoById(@PathVariable ("id") Long id) {
+        return todoRepository.findById(id).get();
+    }
+
+    @PostMapping("todos/create")
+    public Todo createTodo(@RequestBody Todo todo) {
+        return todoRepository.save(todo);
+    }
+
+    @PutMapping("todos/update")
+    public Todo updateTodo(@RequestBody Todo todo) {
+        return todoRepository.save(todo);
+    }
+
+    @DeleteMapping("todos/delete/{id}")
+    public void deleteTodo(@PathVariable ("id") Long id) {
+        todoRepository.deleteById(id);
     }
 
     @PostConstruct
